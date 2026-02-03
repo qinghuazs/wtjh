@@ -18,3 +18,8 @@ def get_timeout() -> int:
         return int(value)
     except ValueError:
         return DEFAULT_TIMEOUT
+
+
+def get_api_key() -> str:
+    """Get API key from env (optional)."""
+    return os.getenv("WYJH_API_KEY", "")
