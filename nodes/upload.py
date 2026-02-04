@@ -9,7 +9,7 @@ from typing import Tuple
 import requests
 import folder_paths
 
-from ..config import get_image_upload_url, get_timeout
+from ..config import get_image_upload_url, get_ssl_verify, get_timeout
 from ..utils.image import tensor_to_pil
 
 
@@ -37,7 +37,12 @@ class WyjhImageUpload:
 
         url = get_image_upload_url()
         files = {"file": ("upload.png", buffer, "image/png")}
-        response = requests.post(url, files=files, timeout=get_timeout(), verify=False)
+        response = requests.post(
+            url,
+            files=files,
+            timeout=get_timeout(),
+            verify=get_ssl_verify(),
+        )
         response.raise_for_status()
         data = response.json()
         if not isinstance(data, dict) or "url" not in data:

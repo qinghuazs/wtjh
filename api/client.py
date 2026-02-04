@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional
 
 import requests
 
-from ..config import get_api_key, get_base_url, get_timeout
+from ..config import get_api_key, get_base_url, get_ssl_verify, get_timeout
 
 
 class WyjhApiClient:
@@ -19,6 +19,7 @@ class WyjhApiClient:
         self.base_url = (base_url or get_base_url()).rstrip("/")
         self.timeout = timeout or get_timeout()
         self.api_key = api_key if api_key is not None else get_api_key()
+        self.ssl_verify = get_ssl_verify()
 
     def _url(self, path: str) -> str:
         path = path.lstrip("/")
@@ -43,6 +44,7 @@ class WyjhApiClient:
             json=json,
             headers=self._headers(headers),
             timeout=self.timeout,
+            verify=self.ssl_verify,
         )
         response.raise_for_status()
         return response.json()
@@ -58,6 +60,7 @@ class WyjhApiClient:
             params=params or {},
             headers=self._headers(headers),
             timeout=self.timeout,
+            verify=self.ssl_verify,
         )
         response.raise_for_status()
         return response.json()

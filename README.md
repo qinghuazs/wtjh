@@ -41,6 +41,7 @@
    - `WYJH_TIMEOUT`：超时时间（秒）
    - `WYJH_API_KEY`：API 访问密钥（Bearer）
    - `WYJH_IMAGE_UPLOAD_URL`：图床上传接口
+   - `WYJH_SSL_VERIFY`：SSL 证书校验开关（`0/false` 关闭）
 3. 启动 ComfyUI 后，在节点列表中查找 `WYJH` 分类。
 
 ## 开发说明

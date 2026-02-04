@@ -35,6 +35,7 @@ def _load_dotenv() -> None:
 DEFAULT_BASE_URL = "https://www.wyjh.top"
 DEFAULT_TIMEOUT = 60
 DEFAULT_IMAGE_UPLOAD_URL = "https://imageproxy.zhongzhuan.chat/api/upload"
+DEFAULT_SSL_VERIFY = True
 
 
 def get_base_url() -> str:
@@ -63,3 +64,14 @@ def get_image_upload_url() -> str:
     """Get image upload URL from env or default."""
     _load_dotenv()
     return os.getenv("WYJH_IMAGE_UPLOAD_URL", DEFAULT_IMAGE_UPLOAD_URL).rstrip("/")
+
+
+def get_ssl_verify() -> bool:
+    """Get SSL verify flag from env or default."""
+    _load_dotenv()
+    value = os.getenv("WYJH_SSL_VERIFY", "").strip().lower()
+    if value in {"0", "false", "no", "off"}:
+        return False
+    if value in {"1", "true", "yes", "on"}:
+        return True
+    return DEFAULT_SSL_VERIFY

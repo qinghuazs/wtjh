@@ -9,12 +9,13 @@ from typing import Any, Dict
 import requests
 
 from .base import BaseWyjhNode
+from ..config import get_ssl_verify
 
 
 def _download_image(url: str) -> "Image.Image":
     from PIL import Image
 
-    resp = requests.get(url, timeout=60)
+    resp = requests.get(url, timeout=60, verify=get_ssl_verify())
     resp.raise_for_status()
     return Image.open(io.BytesIO(resp.content)).convert("RGB")
 
