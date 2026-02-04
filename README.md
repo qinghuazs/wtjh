@@ -8,6 +8,7 @@
 - 视频模型（Video）
 - 千问图像编辑（Qwen Image Edit）
 - 图片上传（Image Upload，支持 IMAGE 或本地路径）
+- Z-Image-Turbo（Text-to-Image）
 
 ## 项目结构
 

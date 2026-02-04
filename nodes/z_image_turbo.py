@@ -1,4 +1,4 @@
-"""Qwen image edit model node."""
+"""Z-Image-Turbo text-to-image node."""
 
 from __future__ import annotations
 
@@ -10,31 +10,43 @@ from ..utils.image_io import decode_base64_image, download_image, extract_image_
 from ..utils.timing import time_block
 
 
-class WyjhQwenImageEdit(BaseWyjhNode):
-    """Image edit node for Qwen model."""
+class WyjhZImageTurbo(BaseWyjhNode):
+    """Text-to-image node for z-image-turbo."""
 
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
                 "prompt": ("STRING", {"multiline": True, "default": ""}),
-                "image_url": ("STRING", {"default": "", "forceInput": True}),
-                "model_name": ("STRING", {"default": "qwen-image-edit-2509"}),
-            }
+            },
+            "optional": {
+                "size": ("STRING", {"default": "1024x1024"}),
+                "n": ("INT", {"default": 1, "min": 1, "max": 8, "step": 1}),
+                "watermark": ("BOOLEAN", {"default": False}),
+                "prompt_extend": ("BOOLEAN", {"default": True}),
+            },
         }
 
     RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "edit"
-    CATEGORY = "WYJH/ImageEdit"
+    FUNCTION = "generate"
+    CATEGORY = "WYJH/Text2Image"
 
-    def edit(self, prompt: str, image_url: str, model_name: str):
-        with time_block("WYJH Qwen Image Edit"):
-            if not image_url:
-                raise ValueError("image_url is required")
+    def generate(
+        self,
+        prompt: str,
+        size: str = "1024x1024",
+        n: int = 1,
+        watermark: bool = False,
+        prompt_extend: bool = True,
+    ):
+        with time_block("WYJH Z-Image-Turbo"):
             payload: Dict[str, Any] = {
-                "model": model_name,
+                "model": "z-image-turbo",
                 "prompt": prompt,
-                "image": image_url,
+                "size": size,
+                "n": n,
+                "watermark": watermark,
+                "prompt_extend": prompt_extend,
             }
             response = self.call("/v1/images/generations", payload)
             value = extract_image_value(response)

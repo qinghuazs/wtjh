@@ -6,6 +6,7 @@ from .img2img import WyjhImage2Image
 from .video import WyjhVideoGenerate
 from .qwen_edit import WyjhQwenImageEdit
 from .upload import WyjhImageUpload, WyjhLocalImageUpload
+from .z_image_turbo import WyjhZImageTurbo
 
 
 NODE_CLASS_MAPPINGS = {
@@ -16,6 +17,7 @@ NODE_CLASS_MAPPINGS = {
     "WYJH Qwen Image Edit": WyjhQwenImageEdit,
     "WYJH Image Upload": WyjhImageUpload,
     "WYJH Local Image Upload": WyjhLocalImageUpload,
+    "WYJH Z-Image-Turbo": WyjhZImageTurbo,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -26,4 +28,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "WYJH Qwen Image Edit": "WYJH · 千问图像编辑",
     "WYJH Image Upload": "WYJH · 图片上传",
     "WYJH Local Image Upload": "WYJH · 本地图片上传",
+    "WYJH Z-Image-Turbo": "WYJH · Z-Image-Turbo",
 }
