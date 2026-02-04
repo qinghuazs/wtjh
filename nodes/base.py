@@ -19,3 +19,10 @@ class BaseWyjhNode:
                 "WYJH_API_KEY not set. Add it to .env or environment variables."
             )
         return self.client.post(path, json=payload)
+
+    def get(self, path: str) -> Dict[str, Any]:
+        if not self.client.api_key:
+            raise RuntimeError(
+                "WYJH_API_KEY not set. Add it to .env or environment variables."
+            )
+        return self.client.get(path)

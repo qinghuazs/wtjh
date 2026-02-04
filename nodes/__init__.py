@@ -7,6 +7,7 @@ from .video import WyjhVideoGenerate
 from .qwen_edit import WyjhQwenImageEdit
 from .upload import WyjhImageUpload, WyjhLocalImageUpload
 from .z_image_turbo import WyjhZImageTurbo
+from .tencent_aigc_image import WyjhTencentAigcImageCreate, WyjhTencentAigcImageQuery
 
 
 NODE_CLASS_MAPPINGS = {
@@ -18,6 +19,8 @@ NODE_CLASS_MAPPINGS = {
     "WYJH Image Upload": WyjhImageUpload,
     "WYJH Local Image Upload": WyjhLocalImageUpload,
     "WYJH Z-Image-Turbo": WyjhZImageTurbo,
+    "WYJH Tencent AIGC Create": WyjhTencentAigcImageCreate,
+    "WYJH Tencent AIGC Query": WyjhTencentAigcImageQuery,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -29,4 +32,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "WYJH Image Upload": "WYJH · 图片上传",
     "WYJH Local Image Upload": "WYJH · 本地图片上传",
     "WYJH Z-Image-Turbo": "WYJH · Z-Image-Turbo",
+    "WYJH Tencent AIGC Create": "WYJH · 腾讯AIGC生图(创建)",
+    "WYJH Tencent AIGC Query": "WYJH · 腾讯AIGC生图(查询)",
 }
