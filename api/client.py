@@ -50,11 +50,13 @@ class WyjhApiClient:
         path: str,
         json: Dict[str, Any],
         headers: Optional[Dict[str, str]] = None,
+        params: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         response = requests.post(
             self._url(path),
             json=json,
             headers=self._headers(headers),
+            params=params,
             timeout=self.timeout,
             verify=self.ssl_verify,
         )

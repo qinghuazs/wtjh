@@ -15,6 +15,10 @@ from .doubao_seedream_4_5_img2img import (
     WyjhDoubaoSeedream45Img2Img,
     WyjhDoubaoSeedream45MultiFusion,
 )
+from .gemini_3_pro_image_preview import WyjhGemini3ProImagePreview
+from .gemini_25_flash_image import WyjhGemini25FlashImage
+from .gemini_25_flash_image_basic import WyjhGemini25FlashImageBasic
+from .gemini_25_flash_image_preview import WyjhGemini25FlashImagePreview
 
 
 NODE_CLASS_MAPPINGS = {
@@ -33,6 +37,10 @@ NODE_CLASS_MAPPINGS = {
     "WYJH Doubao Seedream 4.5 Txt2Img": WyjhDoubaoSeedream45Txt2Img,
     "WYJH Doubao Seedream 4.5 Img2Img": WyjhDoubaoSeedream45Img2Img,
     "WYJH Doubao Seedream 4.5 Multi Fusion": WyjhDoubaoSeedream45MultiFusion,
+    "WYJH Gemini 3 Pro Image Preview": WyjhGemini3ProImagePreview,
+    "WYJH Gemini 2.5 Flash Image": WyjhGemini25FlashImage,
+    "WYJH Gemini 2.5 Flash Image Basic": WyjhGemini25FlashImageBasic,
+    "WYJH Gemini 2.5 Flash Image Preview": WyjhGemini25FlashImagePreview,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -51,4 +59,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "WYJH Doubao Seedream 4.5 Txt2Img": "WYJH · Doubao Seedream 4.5 文生图",
     "WYJH Doubao Seedream 4.5 Img2Img": "WYJH · Doubao Seedream 4.5 图文生图",
     "WYJH Doubao Seedream 4.5 Multi Fusion": "WYJH · Doubao Seedream 4.5 多图融合",
+    "WYJH Gemini 3 Pro Image Preview": "WYJH · Gemini 3 Pro Image Preview",
+    "WYJH Gemini 2.5 Flash Image": "WYJH · Gemini 2.5 Flash Image",
+    "WYJH Gemini 2.5 Flash Image Basic": "WYJH · Gemini 2.5 Flash Image（基础）",
+    "WYJH Gemini 2.5 Flash Image Preview": "WYJH · Gemini 2.5 Flash Image Preview",
 }
