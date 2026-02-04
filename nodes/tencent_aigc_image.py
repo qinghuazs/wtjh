@@ -115,7 +115,7 @@ class WyjhTencentAigcImageQuery(BaseWyjhNode):
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "task_id": ("STRING", {"default": ""}),
+                "task_id": ("STRING", {"default": "", "forceInput": True}),
             }
         }
 
