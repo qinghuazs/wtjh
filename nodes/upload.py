@@ -37,7 +37,7 @@ class WyjhImageUpload:
 
         url = get_image_upload_url()
         files = {"file": ("upload.png", buffer, "image/png")}
-        response = requests.post(url, files=files, timeout=get_timeout())
+        response = requests.post(url, files=files, timeout=get_timeout(), verify=False)
         response.raise_for_status()
         data = response.json()
         if not isinstance(data, dict) or "url" not in data:

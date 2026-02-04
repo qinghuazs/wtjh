@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 对话和思考时使用中文。
 
+## python 命令不可用，如果你后续运行脚本请用 python3 命令
+
 ## 项目概述
 
 这是一个 ComfyUI 自定义节点插件，用于接入 WYJH API（base URL: https://www.wyjh.top）。支持的模型类型包括：会话、问生图、图生图、视频生成、千问图像编辑、图片上传。

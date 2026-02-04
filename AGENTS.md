@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## 对话和思考时使用中文
-
+## python 命令不可用，如果你后续运行脚本请用 python3
 ## Project Structure & Module Organization
 
 - `__init__.py`: ComfyUI entry point that exposes node mappings.

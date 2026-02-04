@@ -3,14 +3,18 @@
 import os
 
 _DOTENV_LOADED = False
+_PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def _load_dotenv(path: str = ".env") -> None:
+def _load_dotenv() -> None:
     """Lightweight .env loader without external deps."""
     global _DOTENV_LOADED
     if _DOTENV_LOADED:
         return
     _DOTENV_LOADED = True
+
+    # 从插件目录加载 .env
+    path = os.path.join(_PLUGIN_DIR, ".env")
     if not os.path.exists(path):
         return
     try:
@@ -25,8 +29,8 @@ def _load_dotenv(path: str = ".env") -> None:
                 if key and key not in os.environ:
                     os.environ[key] = value
     except OSError:
-        # Ignore .env read errors to avoid breaking runtime.
         return
+
 
 DEFAULT_BASE_URL = "https://www.wyjh.top"
 DEFAULT_TIMEOUT = 60
