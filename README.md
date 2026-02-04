@@ -15,6 +15,7 @@
 - Doubao Seedream 4.5 文生图 / 图文生图 / 多图融合
 - Gemini 3 Pro Image Preview
 - Gemini 2.5 Flash Image（含基础/Preview）
+- 文本输入节点
 
 ## 项目结构
 
