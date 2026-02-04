@@ -7,6 +7,7 @@
 - 图生图（Image-to-Image）
 - 视频模型（Video）
 - 千问图像编辑（Qwen Image Edit）
+- 图片上传（Image Upload）
 
 ## 项目结构
 
@@ -39,6 +40,7 @@
    - `WYJH_BASE_URL`：API base url
    - `WYJH_TIMEOUT`：超时时间（秒）
    - `WYJH_API_KEY`：API 访问密钥（Bearer）
+   - `WYJH_IMAGE_UPLOAD_URL`：图床上传接口
 3. 启动 ComfyUI 后，在节点列表中查找 `WYJH` 分类。
 
 ## 开发说明

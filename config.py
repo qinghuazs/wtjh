@@ -4,6 +4,7 @@ import os
 
 DEFAULT_BASE_URL = "https://www.wyjh.top"
 DEFAULT_TIMEOUT = 60
+DEFAULT_IMAGE_UPLOAD_URL = "https://imageproxy.zhongzhuan.chat/api/upload"
 
 
 def get_base_url() -> str:
@@ -23,3 +24,8 @@ def get_timeout() -> int:
 def get_api_key() -> str:
     """Get API key from env (optional)."""
     return os.getenv("WYJH_API_KEY", "")
+
+
+def get_image_upload_url() -> str:
+    """Get image upload URL from env or default."""
+    return os.getenv("WYJH_IMAGE_UPLOAD_URL", DEFAULT_IMAGE_UPLOAD_URL).rstrip("/")

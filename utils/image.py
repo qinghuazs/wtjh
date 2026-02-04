@@ -28,4 +28,6 @@ def tensor_to_pil(tensor: Any) -> "Image.Image":
     if hasattr(tensor, "detach"):
         tensor = tensor.detach().cpu().numpy()
     arr = (tensor * 255.0).clip(0, 255).astype("uint8")
+    if arr.ndim == 4:
+        arr = arr[0]
     return Image.fromarray(arr)
