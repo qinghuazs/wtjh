@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict, Any
 
 from .base import BaseWyjhNode
+from ..utils.timing import time_block
 
 
 class WyjhSessionChat(BaseWyjhNode):
@@ -29,11 +30,12 @@ class WyjhSessionChat(BaseWyjhNode):
     CATEGORY = "WYJH/Session"
 
     def chat(self, prompt: str, model_name: str, session_id: str = "", temperature: float = 0.7):
-        payload: Dict[str, Any] = {
-            "prompt": prompt,
-            "model": model_name,
-            "session_id": session_id or None,
-            "temperature": temperature,
-        }
-        # TODO: replace with real endpoint path
-        raise RuntimeError("WYJH session chat not implemented yet")
+        with time_block("WYJH Session Chat"):
+            payload: Dict[str, Any] = {
+                "prompt": prompt,
+                "model": model_name,
+                "session_id": session_id or None,
+                "temperature": temperature,
+            }
+            # TODO: replace with real endpoint path
+            raise RuntimeError("WYJH session chat not implemented yet")

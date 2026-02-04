@@ -10,6 +10,7 @@ import requests
 
 from .base import BaseWyjhNode
 from ..config import get_ssl_verify
+from ..utils.timing import time_block
 
 
 def _download_image(url: str) -> "Image.Image":
@@ -71,17 +72,18 @@ class WyjhQwenImageEdit(BaseWyjhNode):
     CATEGORY = "WYJH/ImageEdit"
 
     def edit(self, prompt: str, image_url: str, model_name: str):
-        if not image_url:
-            raise ValueError("image_url is required")
-        payload: Dict[str, Any] = {
-            "model": model_name,
-            "prompt": prompt,
-            "image": image_url,
-        }
-        response = self.call("/v1/images/generations", payload)
-        value = _extract_image_value(response)
-        if isinstance(value, str) and value.startswith("http"):
-            pil = _download_image(value)
-        else:
-            pil = _decode_base64_image(value)
-        return (_pil_to_tensor(pil),)
+        with time_block("WYJH Qwen Image Edit"):
+            if not image_url:
+                raise ValueError("image_url is required")
+            payload: Dict[str, Any] = {
+                "model": model_name,
+                "prompt": prompt,
+                "image": image_url,
+            }
+            response = self.call("/v1/images/generations", payload)
+            value = _extract_image_value(response)
+            if isinstance(value, str) and value.startswith("http"):
+                pil = _download_image(value)
+            else:
+                pil = _decode_base64_image(value)
+            return (_pil_to_tensor(pil),)

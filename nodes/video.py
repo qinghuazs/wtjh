@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict, Any
 
 from .base import BaseWyjhNode
+from ..utils.timing import time_block
 
 
 class WyjhVideoGenerate(BaseWyjhNode):
@@ -28,12 +29,13 @@ class WyjhVideoGenerate(BaseWyjhNode):
     CATEGORY = "WYJH/Video"
 
     def generate(self, prompt: str, model_name: str, duration: float, fps: int, seed: int = 0):
-        payload: Dict[str, Any] = {
-            "prompt": prompt,
-            "model": model_name,
-            "duration": duration,
-            "fps": fps,
-            "seed": seed,
-        }
-        # TODO: replace with real endpoint path
-        raise RuntimeError("WYJH video generation not implemented yet")
+        with time_block("WYJH Video"):
+            payload: Dict[str, Any] = {
+                "prompt": prompt,
+                "model": model_name,
+                "duration": duration,
+                "fps": fps,
+                "seed": seed,
+            }
+            # TODO: replace with real endpoint path
+            raise RuntimeError("WYJH video generation not implemented yet")

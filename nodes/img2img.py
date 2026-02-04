@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Dict, Any
 
 from .base import BaseWyjhNode
+from ..utils.timing import time_block
 
 
 class WyjhImage2Image(BaseWyjhNode):
@@ -40,14 +41,15 @@ class WyjhImage2Image(BaseWyjhNode):
         cfg_scale: float = 7.0,
         seed: int = 0,
     ):
-        payload: Dict[str, Any] = {
-            "prompt": prompt,
-            "negative_prompt": negative_prompt,
-            "model": model_name,
-            "strength": strength,
-            "steps": steps,
-            "cfg_scale": cfg_scale,
-            "seed": seed,
-        }
-        # TODO: encode input image + call real endpoint
-        raise RuntimeError("WYJH image-to-image not implemented yet")
+        with time_block("WYJH Image2Image"):
+            payload: Dict[str, Any] = {
+                "prompt": prompt,
+                "negative_prompt": negative_prompt,
+                "model": model_name,
+                "strength": strength,
+                "steps": steps,
+                "cfg_scale": cfg_scale,
+                "seed": seed,
+            }
+            # TODO: encode input image + call real endpoint
+            raise RuntimeError("WYJH image-to-image not implemented yet")
