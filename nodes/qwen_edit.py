@@ -60,7 +60,7 @@ class WyjhQwenImageEdit(BaseWyjhNode):
         return {
             "required": {
                 "prompt": ("STRING", {"multiline": True, "default": ""}),
-                "image_url": ("STRING", {"default": ""}),
+                "image_url": ("STRING", {"default": "", "forceInput": True}),
                 "model_name": ("STRING", {"default": "qwen-image-edit-2509"}),
             }
         }
