@@ -83,6 +83,7 @@ class WyjhDoubaoSeedream45Img2Img(BaseWyjhNode):
 
 class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
     """Multi image inputs -> single image output."""
+    INPUT_IS_LIST = ("image_urls",)
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -115,7 +116,13 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
         watermark: bool = True,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Multi Fusion"):
-            images = _split_image_inputs(image_urls)
+            images: List[str] = []
+            if isinstance(image_urls, (list, tuple)):
+                for item in image_urls:
+                    if isinstance(item, str):
+                        images.extend(_split_image_inputs(item))
+            else:
+                images = _split_image_inputs(image_urls)
             if not images:
                 raise ValueError("image_urls is required")
             payload: Dict[str, Any] = {
