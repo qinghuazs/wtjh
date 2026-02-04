@@ -89,7 +89,7 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
         return {
             "required": {
                 "prompt": ("STRING", {"multiline": True, "default": ""}),
-                "image_urls": ("STRING", {"default": ""}),
+                "image_urls": ("STRING", {"default": "", "forceInput": True}),
             },
             "optional": {
                 "size": ("STRING", {"default": "2048x2048"}),
