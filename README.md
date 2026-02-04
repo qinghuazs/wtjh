@@ -9,6 +9,7 @@
 - 千问图像编辑（Qwen Image Edit）
 - 图片上传（Image Upload，支持 IMAGE 或本地路径）
 - Z-Image-Turbo（Text-to-Image）
+- Qwen Image Max（Text-to-Image）
 - 腾讯AIGC生图（创建任务 / 查询结果）
 
 ## 项目结构
