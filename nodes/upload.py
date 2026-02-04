@@ -11,6 +11,7 @@ import folder_paths
 
 from ..config import get_image_upload_url, get_ssl_verify, get_timeout
 from ..utils.image import tensor_to_pil
+from ..utils.timing import time_block
 
 
 class WyjhImageUpload:
@@ -30,24 +31,25 @@ class WyjhImageUpload:
     CATEGORY = "WYJH/Utils"
 
     def upload(self, image) -> Tuple[str]:
-        pil = tensor_to_pil(image)
-        buffer = io.BytesIO()
-        pil.save(buffer, format="PNG")
-        buffer.seek(0)
+        with time_block("WYJH Image Upload"):
+            pil = tensor_to_pil(image)
+            buffer = io.BytesIO()
+            pil.save(buffer, format="PNG")
+            buffer.seek(0)
 
-        url = get_image_upload_url()
-        files = {"file": ("upload.png", buffer, "image/png")}
-        response = requests.post(
-            url,
-            files=files,
-            timeout=get_timeout(),
-            verify=get_ssl_verify(),
-        )
-        response.raise_for_status()
-        data = response.json()
-        if not isinstance(data, dict) or "url" not in data:
-            raise RuntimeError("Upload response missing url")
-        return (data["url"],)
+            url = get_image_upload_url()
+            files = {"file": ("upload.png", buffer, "image/png")}
+            response = requests.post(
+                url,
+                files=files,
+                timeout=get_timeout(),
+                verify=get_ssl_verify(),
+            )
+            response.raise_for_status()
+            data = response.json()
+            if not isinstance(data, dict) or "url" not in data:
+                raise RuntimeError("Upload response missing url")
+            return (data["url"],)
 
 
 class WyjhLocalImageUpload:
@@ -76,28 +78,34 @@ class WyjhLocalImageUpload:
         from PIL import Image
         import numpy as np
 
-        image_path = folder_paths.get_annotated_filepath(image)
-        pil = Image.open(image_path).convert("RGB")
-        filename = os.path.basename(image_path)
+        with time_block("WYJH Local Image Upload"):
+            image_path = folder_paths.get_annotated_filepath(image)
+            pil = Image.open(image_path).convert("RGB")
+            filename = os.path.basename(image_path)
 
-        # Upload to imageproxy
-        buffer = io.BytesIO()
-        pil.save(buffer, format="PNG")
-        buffer.seek(0)
+            # Upload to imageproxy
+            buffer = io.BytesIO()
+            pil.save(buffer, format="PNG")
+            buffer.seek(0)
 
-        url = get_image_upload_url()
-        files = {"file": (filename or "upload.png", buffer, "image/png")}
-        response = requests.post(url, files=files, timeout=get_timeout())
-        response.raise_for_status()
-        data = response.json()
-        if not isinstance(data, dict) or "url" not in data:
-            raise RuntimeError("Upload response missing url")
+            url = get_image_upload_url()
+            files = {"file": (filename or "upload.png", buffer, "image/png")}
+            response = requests.post(
+                url,
+                files=files,
+                timeout=get_timeout(),
+                verify=get_ssl_verify(),
+            )
+            response.raise_for_status()
+            data = response.json()
+            if not isinstance(data, dict) or "url" not in data:
+                raise RuntimeError("Upload response missing url")
 
-        # Convert to tensor for output
-        arr = np.array(pil).astype(np.float32) / 255.0
-        tensor = arr[np.newaxis, ...]  # Add batch dimension
+            # Convert to tensor for output
+            arr = np.array(pil).astype(np.float32) / 255.0
+            tensor = arr[np.newaxis, ...]  # Add batch dimension
 
-        return (data["url"], tensor)
+            return (data["url"], tensor)
 
     @classmethod
     def IS_CHANGED(cls, image):
