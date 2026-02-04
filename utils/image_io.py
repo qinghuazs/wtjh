@@ -23,6 +23,26 @@ def extract_image_value(payload: Dict[str, Any]) -> str:
     raise RuntimeError("Unrecognized image response format")
 
 
+def extract_image_list(payload: Dict[str, Any]) -> list[str]:
+    values: list[str] = []
+    if isinstance(payload, dict):
+        if "data" in payload and isinstance(payload["data"], list) and payload["data"]:
+            for item in payload["data"]:
+                if isinstance(item, dict):
+                    for key in ("url", "image_url", "image", "output", "result", "b64_json"):
+                        if key in item and item[key]:
+                            values.append(item[key])
+                            break
+        if not values:
+            for key in ("url", "image_url", "image", "output", "result", "b64_json"):
+                if key in payload and payload[key]:
+                    values.append(payload[key])
+                    break
+    if not values:
+        raise RuntimeError("Unrecognized image response format")
+    return values
+
+
 def download_image(url: str, *, timeout: int = 60, verify: bool = True) -> "Image.Image":
     from PIL import Image
 

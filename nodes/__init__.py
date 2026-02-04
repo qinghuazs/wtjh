@@ -9,6 +9,12 @@ from .upload import WyjhImageUpload, WyjhLocalImageUpload
 from .z_image_turbo import WyjhZImageTurbo
 from .qwen_image_max import WyjhQwenImageMax
 from .tencent_aigc_image import WyjhTencentAigcImageCreate, WyjhTencentAigcImageQuery
+from .doubao_seedream_4_0_img2img import WyjhDoubaoSeedream40Img2Img
+from .doubao_seedream_4_5_txt2img import WyjhDoubaoSeedream45Txt2Img
+from .doubao_seedream_4_5_img2img import (
+    WyjhDoubaoSeedream45Img2Img,
+    WyjhDoubaoSeedream45MultiFusion,
+)
 
 
 NODE_CLASS_MAPPINGS = {
@@ -23,6 +29,10 @@ NODE_CLASS_MAPPINGS = {
     "WYJH Qwen Image Max": WyjhQwenImageMax,
     "WYJH Tencent AIGC Create": WyjhTencentAigcImageCreate,
     "WYJH Tencent AIGC Query": WyjhTencentAigcImageQuery,
+    "WYJH Doubao Seedream 4.0 Img2Img": WyjhDoubaoSeedream40Img2Img,
+    "WYJH Doubao Seedream 4.5 Txt2Img": WyjhDoubaoSeedream45Txt2Img,
+    "WYJH Doubao Seedream 4.5 Img2Img": WyjhDoubaoSeedream45Img2Img,
+    "WYJH Doubao Seedream 4.5 Multi Fusion": WyjhDoubaoSeedream45MultiFusion,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -37,4 +47,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "WYJH Qwen Image Max": "WYJH · Qwen Image Max",
     "WYJH Tencent AIGC Create": "WYJH · 腾讯AIGC生图(创建)",
     "WYJH Tencent AIGC Query": "WYJH · 腾讯AIGC生图(查询)",
+    "WYJH Doubao Seedream 4.0 Img2Img": "WYJH · Doubao Seedream 4.0 图生图",
+    "WYJH Doubao Seedream 4.5 Txt2Img": "WYJH · Doubao Seedream 4.5 文生图",
+    "WYJH Doubao Seedream 4.5 Img2Img": "WYJH · Doubao Seedream 4.5 图文生图",
+    "WYJH Doubao Seedream 4.5 Multi Fusion": "WYJH · Doubao Seedream 4.5 多图融合",
 }

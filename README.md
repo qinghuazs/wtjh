@@ -11,6 +11,8 @@
 - Z-Image-Turbo（Text-to-Image）
 - Qwen Image Max（Text-to-Image）
 - 腾讯AIGC生图（创建任务 / 查询结果）
+- Doubao Seedream 4.0 图生图
+- Doubao Seedream 4.5 文生图 / 图文生图 / 多图融合
 
 ## 项目结构
 
