@@ -1,5 +1,7 @@
 # Repository Guidelines
 
+## 对话和思考时使用中文
+
 ## Project Structure & Module Organization
 
 - `__init__.py`: ComfyUI entry point that exposes node mappings.

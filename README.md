@@ -7,7 +7,7 @@
 - 图生图（Image-to-Image）
 - 视频模型（Video）
 - 千问图像编辑（Qwen Image Edit）
-- 图片上传（Image Upload）
+- 图片上传（Image Upload，支持 IMAGE 或本地路径）
 
 ## 项目结构
 

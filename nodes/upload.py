@@ -3,26 +3,24 @@
 from __future__ import annotations
 
 import io
+import os
 from typing import Tuple
 
 import requests
+import folder_paths
 
 from ..config import get_image_upload_url, get_timeout
 from ..utils.image import tensor_to_pil
 
 
 class WyjhImageUpload:
-    """Upload ComfyUI IMAGE to imageproxy and return URL."""
+    """Upload ComfyUI IMAGE tensor to imageproxy and return URL."""
 
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
                 "image": ("IMAGE",),
-            },
-            "optional": {
-                "filename": ("STRING", {"default": "upload.png"}),
-                "upload_url": ("STRING", {"default": ""}),
             },
         }
 
@@ -31,17 +29,74 @@ class WyjhImageUpload:
     FUNCTION = "upload"
     CATEGORY = "WYJH/Utils"
 
-    def upload(self, image, filename: str = "upload.png", upload_url: str = "") -> Tuple[str]:
+    def upload(self, image) -> Tuple[str]:
         pil = tensor_to_pil(image)
         buffer = io.BytesIO()
         pil.save(buffer, format="PNG")
         buffer.seek(0)
 
-        url = upload_url.strip() or get_image_upload_url()
-        files = {"file": (filename or "upload.png", buffer, "image/png")}
+        url = get_image_upload_url()
+        files = {"file": ("upload.png", buffer, "image/png")}
         response = requests.post(url, files=files, timeout=get_timeout())
         response.raise_for_status()
         data = response.json()
         if not isinstance(data, dict) or "url" not in data:
             raise RuntimeError("Upload response missing url")
         return (data["url"],)
+
+
+class WyjhLocalImageUpload:
+    """Select local image from ComfyUI input folder and upload to imageproxy."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        input_dir = folder_paths.get_input_directory()
+        files = folder_paths.get_filename_list("input")
+        return {
+            "required": {
+                "image": (sorted(files), {"image_upload": True}),
+            },
+        }
+
+    RETURN_TYPES = ("STRING", "IMAGE")
+    RETURN_NAMES = ("url", "image")
+    FUNCTION = "upload"
+    CATEGORY = "WYJH/Utils"
+
+    def upload(self, image: str) -> Tuple[str, any]:
+        from PIL import Image
+        import numpy as np
+
+        image_path = folder_paths.get_annotated_filepath(image)
+        pil = Image.open(image_path).convert("RGB")
+        filename = os.path.basename(image_path)
+
+        # Upload to imageproxy
+        buffer = io.BytesIO()
+        pil.save(buffer, format="PNG")
+        buffer.seek(0)
+
+        url = get_image_upload_url()
+        files = {"file": (filename or "upload.png", buffer, "image/png")}
+        response = requests.post(url, files=files, timeout=get_timeout())
+        response.raise_for_status()
+        data = response.json()
+        if not isinstance(data, dict) or "url" not in data:
+            raise RuntimeError("Upload response missing url")
+
+        # Convert to tensor for output
+        arr = np.array(pil).astype(np.float32) / 255.0
+        tensor = arr[np.newaxis, ...]  # Add batch dimension
+
+        return (data["url"], tensor)
+
+    @classmethod
+    def IS_CHANGED(cls, image):
+        image_path = folder_paths.get_annotated_filepath(image)
+        return os.path.getmtime(image_path)
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, image):
+        if not folder_paths.exists_annotated_filepath(image):
+            return f"Invalid image file: {image}"
+        return True
