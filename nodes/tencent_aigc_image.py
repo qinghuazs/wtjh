@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Any, Dict, Tuple
+import time
 
 from .base import BaseWyjhNode
 from ..config import get_ssl_verify
@@ -128,22 +129,36 @@ class WyjhTencentAigcImageQuery(BaseWyjhNode):
         with time_block("WYJH Tencent AIGC Query"):
             if not task_id:
                 raise ValueError("task_id is required")
-            response = self.get(f"/tencent-vod/v1/query/{task_id}")
-            data = response.get("Response", {}) if isinstance(response, dict) else {}
-            status = data.get("Status", "")
-            output = data.get("Output", {}) if isinstance(data, dict) else {}
-            file_infos = output.get("FileInfos", []) if isinstance(output, dict) else []
-            file_url = ""
-            if isinstance(file_infos, list) and file_infos:
-                first = file_infos[0]
-                if isinstance(first, dict):
-                    file_url = first.get("FileUrl", "") or first.get("Url", "")
+            poll_interval = 5
+            max_wait = 300
+            deadline = time.time() + max_wait
+            last_status = ""
+            last_progress = ""
 
-            if status != "FINISH" or not file_url:
-                progress = data.get("Progress", "")
-                raise RuntimeError(
-                    f"Task not finished. status={status}, progress={progress}"
-                )
+            while True:
+                response = self.get(f"/tencent-vod/v1/query/{task_id}")
+                data = response.get("Response", {}) if isinstance(response, dict) else {}
+                status = data.get("Status", "") if isinstance(data, dict) else ""
+                output = data.get("Output", {}) if isinstance(data, dict) else {}
+                file_infos = output.get("FileInfos", []) if isinstance(output, dict) else []
+                file_url = ""
+                if isinstance(file_infos, list) and file_infos:
+                    first = file_infos[0]
+                    if isinstance(first, dict):
+                        file_url = first.get("FileUrl", "") or first.get("Url", "")
 
-            pil = download_image(file_url, verify=get_ssl_verify())
-            return (pil_to_tensor(pil), status, file_url)
+                if status == "FINISH" and file_url:
+                    pil = download_image(file_url, verify=get_ssl_verify())
+                    return (pil_to_tensor(pil), status, file_url)
+
+                if status in {"FAIL", "FAILED", "ERROR"}:
+                    raise RuntimeError(f"Task failed. status={status}")
+
+                last_status = status
+                last_progress = data.get("Progress", "")
+                if time.time() >= deadline:
+                    raise RuntimeError(
+                        "Task timeout after 5 minutes. "
+                        f"status={last_status}, progress={last_progress}"
+                    )
+                time.sleep(poll_interval)

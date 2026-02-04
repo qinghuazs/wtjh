@@ -33,6 +33,18 @@ class WyjhApiClient:
             headers.update(extra)
         return headers
 
+    def _raise_for_status(self, response: requests.Response) -> None:
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as exc:
+            body = response.text
+            if body and len(body) > 2000:
+                body = body[:2000] + "...(truncated)"
+            detail = f"{exc}"
+            if body:
+                detail += f" | response body: {body}"
+            raise requests.HTTPError(detail, response=response) from None
+
     def post(
         self,
         path: str,
@@ -46,7 +58,7 @@ class WyjhApiClient:
             timeout=self.timeout,
             verify=self.ssl_verify,
         )
-        response.raise_for_status()
+        self._raise_for_status(response)
         return response.json()
 
     def get(
@@ -62,5 +74,5 @@ class WyjhApiClient:
             timeout=self.timeout,
             verify=self.ssl_verify,
         )
-        response.raise_for_status()
+        self._raise_for_status(response)
         return response.json()
