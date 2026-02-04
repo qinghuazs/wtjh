@@ -51,10 +51,14 @@ class WyjhLocalImageUpload:
     @classmethod
     def INPUT_TYPES(cls):
         input_dir = folder_paths.get_input_directory()
-        files = folder_paths.get_filename_list("input")
+        files = []
+        if os.path.isdir(input_dir):
+            for f in os.listdir(input_dir):
+                if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp')):
+                    files.append(f)
         return {
             "required": {
-                "image": (sorted(files), {"image_upload": True}),
+                "image": (sorted(files) if files else [""], {"image_upload": True}),
             },
         }
 
