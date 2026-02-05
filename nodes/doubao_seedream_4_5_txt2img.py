@@ -32,7 +32,7 @@ class WyjhDoubaoSeedream45Txt2Img(BaseWyjhNode):
             },
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
-                "watermark": ("BOOLEAN", {"default": True}),
+                "watermark": ("BOOLEAN", {"default": False}),
             },
         }
 
@@ -44,7 +44,7 @@ class WyjhDoubaoSeedream45Txt2Img(BaseWyjhNode):
         self,
         prompt: str,
         size: str = "2048x2048 (1:1)",
-        watermark: bool = True,
+        watermark: bool = False,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Txt2Img"):
             size_value = self.SIZE_CHOICES.get(size, size)

@@ -33,7 +33,7 @@ class WyjhDoubaoSeedream40Img2Img(BaseWyjhNode):
             },
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
-                "watermark": ("BOOLEAN", {"default": True}),
+                "watermark": ("BOOLEAN", {"default": False}),
             },
         }
 
@@ -46,7 +46,7 @@ class WyjhDoubaoSeedream40Img2Img(BaseWyjhNode):
         prompt: str,
         image_url: str,
         size: str = "2048x2048",
-        watermark: bool = True,
+        watermark: bool = False,
     ):
         with time_block("WYJH Doubao Seedream 4.0 Img2Img"):
             if not image_url:

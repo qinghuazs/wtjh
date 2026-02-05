@@ -37,7 +37,7 @@ class WyjhDoubaoSeedream45MultiRefGroup(BaseWyjhNode):
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
                 "max_images": ("INT", {"default": 4, "min": 1, "max": 8, "step": 1}),
-                "watermark": ("BOOLEAN", {"default": True}),
+                "watermark": ("BOOLEAN", {"default": False}),
             },
         }
 
@@ -51,7 +51,7 @@ class WyjhDoubaoSeedream45MultiRefGroup(BaseWyjhNode):
         image_urls: str,
         size: str = "2048x2048 (1:1)",
         max_images: int = 4,
-        watermark: bool = True,
+        watermark: bool = False,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Multi Ref Group"):
             if isinstance(prompt, (list, tuple)):
@@ -59,7 +59,7 @@ class WyjhDoubaoSeedream45MultiRefGroup(BaseWyjhNode):
             if isinstance(size, (list, tuple)):
                 size = size[0] if size else "2048x2048 (1:1)"
             if isinstance(watermark, (list, tuple)):
-                watermark = bool(watermark[0]) if watermark else True
+                watermark = bool(watermark[0]) if watermark else False
             if isinstance(max_images, (list, tuple)):
                 max_images = int(max_images[0]) if max_images else 4
 

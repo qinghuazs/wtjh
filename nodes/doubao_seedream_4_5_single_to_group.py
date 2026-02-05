@@ -34,7 +34,7 @@ class WyjhDoubaoSeedream45SingleToGroup(BaseWyjhNode):
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
                 "max_images": ("INT", {"default": 4, "min": 1, "max": 8, "step": 1}),
-                "watermark": ("BOOLEAN", {"default": True}),
+                "watermark": ("BOOLEAN", {"default": False}),
             },
         }
 
@@ -48,7 +48,7 @@ class WyjhDoubaoSeedream45SingleToGroup(BaseWyjhNode):
         image_url: str,
         size: str = "2048x2048 (1:1)",
         max_images: int = 4,
-        watermark: bool = True,
+        watermark: bool = False,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Single To Group"):
             if not image_url:

@@ -46,7 +46,7 @@ class WyjhDoubaoSeedream45Img2Img(BaseWyjhNode):
             },
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
-                "watermark": ("BOOLEAN", {"default": True}),
+                "watermark": ("BOOLEAN", {"default": False}),
             },
         }
 
@@ -59,7 +59,7 @@ class WyjhDoubaoSeedream45Img2Img(BaseWyjhNode):
         prompt: str,
         image_url: str,
         size: str = "2048x2048 (1:1)",
-        watermark: bool = True,
+        watermark: bool = False,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Img2Img"):
             if not image_url:
@@ -107,7 +107,7 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
             },
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
-                "watermark": ("BOOLEAN", {"default": True}),
+                "watermark": ("BOOLEAN", {"default": False}),
             },
         }
 
@@ -120,7 +120,7 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
         prompt: str,
         image_urls: str,
         size: str = "2048x2048 (1:1)",
-        watermark: bool = True,
+        watermark: bool = False,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Multi Fusion"):
             if isinstance(prompt, (list, tuple)):
@@ -137,7 +137,7 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
             if isinstance(size, (list, tuple)):
                 size = size[0] if size else "2048x2048 (1:1)"
             if isinstance(watermark, (list, tuple)):
-                watermark = bool(watermark[0]) if watermark else True
+                watermark = bool(watermark[0]) if watermark else False
             size_value = self.SIZE_CHOICES.get(size, size)
             payload: Dict[str, Any] = {
                 "model": "doubao-seedream-4-5-251128",
