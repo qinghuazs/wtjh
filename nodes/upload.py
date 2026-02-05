@@ -103,8 +103,8 @@ class WyjhLocalImageUpload:
                 raise RuntimeError("Upload response missing url")
 
             # Convert to tensor for output
-        arr = np.array(pil).astype(np.float32) / 255.0
-        tensor = torch.from_numpy(arr)[None, ...]  # Add batch dimension
+            arr = np.array(pil).astype(np.float32) / 255.0
+            tensor = torch.from_numpy(arr)[None, ...]  # Add batch dimension
 
             return (data["url"], tensor)
 
