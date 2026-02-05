@@ -87,6 +87,15 @@ class WyjhDoubaoSeedream45Img2Img(BaseWyjhNode):
 
 class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
     """Multi image inputs -> single image output."""
+
+    SIZE_CHOICES = {
+        "1024x1024 (1:1)": "1024x1024",
+        "2048x2048 (1:1)": "2048x2048",
+        "2304x1728 (4:3)": "2304x1728",
+        "2496x1664 (3:2)": "2496x1664",
+        "2560x1440 (16:9)": "2560x1440",
+        "3024x1296 (21:9)": "3024x1296",
+    }
     INPUT_IS_LIST = ("image_urls",)
 
     @classmethod
@@ -97,10 +106,7 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
                 "image_urls": ("STRING", {"default": "", "forceInput": True}),
             },
             "optional": {
-                "size": ("STRING", {"default": "2048x2048"}),
-                "sequential_image_generation": ("STRING", {"default": "disabled"}),
-                "stream": ("BOOLEAN", {"default": False}),
-                "response_format": ("STRING", {"default": "url"}),
+                "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
                 "watermark": ("BOOLEAN", {"default": True}),
             },
         }
@@ -113,10 +119,7 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
         self,
         prompt: str,
         image_urls: str,
-        size: str = "2048x2048",
-        sequential_image_generation: str = "disabled",
-        stream: bool = False,
-        response_format: str = "url",
+        size: str = "2048x2048 (1:1)",
         watermark: bool = True,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Multi Fusion"):
@@ -129,14 +132,15 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
                 images = _split_image_inputs(image_urls)
             if not images:
                 raise ValueError("image_urls is required")
+            size_value = self.SIZE_CHOICES.get(size, size)
             payload: Dict[str, Any] = {
                 "model": "doubao-seedream-4-5-251128",
                 "prompt": prompt,
                 "image": images,
-                "size": size,
-                "sequential_image_generation": sequential_image_generation,
-                "stream": stream,
-                "response_format": response_format,
+                "size": size_value,
+                "sequential_image_generation": "disabled",
+                "stream": False,
+                "response_format": "url",
                 "watermark": watermark,
             }
             response = self.call("/v1/images/generations", payload)
