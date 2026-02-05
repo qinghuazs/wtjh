@@ -19,9 +19,7 @@ class WyjhDoubaoSeedream45MultiRefGroup(BaseWyjhNode):
     INPUT_IS_LIST = ("image_urls",)
 
     SIZE_CHOICES = {
-        "1K": "1K",
         "1024x1024 (1:1)": "1024x1024",
-        "2K": "2K",
         "2048x2048 (1:1)": "2048x2048",
         "2304x1728 (4:3)": "2304x1728",
         "2496x1664 (3:2)": "2496x1664",
@@ -37,7 +35,7 @@ class WyjhDoubaoSeedream45MultiRefGroup(BaseWyjhNode):
                 "image_urls": ("STRING", {"default": "", "forceInput": True}),
             },
             "optional": {
-                "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2K"}),
+                "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
                 "max_images": ("INT", {"default": 4, "min": 1, "max": 8, "step": 1}),
                 "watermark": ("BOOLEAN", {"default": True}),
             },
@@ -51,7 +49,7 @@ class WyjhDoubaoSeedream45MultiRefGroup(BaseWyjhNode):
         self,
         prompt: str,
         image_urls: str,
-        size: str = "2K",
+        size: str = "2048x2048 (1:1)",
         max_images: int = 4,
         watermark: bool = True,
     ):
@@ -59,7 +57,7 @@ class WyjhDoubaoSeedream45MultiRefGroup(BaseWyjhNode):
             if isinstance(prompt, (list, tuple)):
                 prompt = prompt[0] if prompt else ""
             if isinstance(size, (list, tuple)):
-                size = size[0] if size else "2K"
+                size = size[0] if size else "2048x2048 (1:1)"
             if isinstance(watermark, (list, tuple)):
                 watermark = bool(watermark[0]) if watermark else True
             if isinstance(max_images, (list, tuple)):

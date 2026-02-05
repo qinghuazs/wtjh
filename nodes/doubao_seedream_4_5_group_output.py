@@ -16,9 +16,7 @@ class WyjhDoubaoSeedream45GroupOutput(BaseWyjhNode):
     """Text prompt -> group images output."""
 
     SIZE_CHOICES = {
-        "1K": "1K",
         "1024x1024 (1:1)": "1024x1024",
-        "2K": "2K",
         "2048x2048 (1:1)": "2048x2048",
         "2304x1728 (4:3)": "2304x1728",
         "2496x1664 (3:2)": "2496x1664",
@@ -33,7 +31,7 @@ class WyjhDoubaoSeedream45GroupOutput(BaseWyjhNode):
                 "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
-                "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2K"}),
+                "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
                 "max_images": ("INT", {"default": 4, "min": 1, "max": 8, "step": 1}),
                 "watermark": ("BOOLEAN", {"default": True}),
             },
@@ -46,7 +44,7 @@ class WyjhDoubaoSeedream45GroupOutput(BaseWyjhNode):
     def generate(
         self,
         prompt: str,
-        size: str = "2K",
+        size: str = "2048x2048 (1:1)",
         max_images: int = 4,
         watermark: bool = True,
     ):

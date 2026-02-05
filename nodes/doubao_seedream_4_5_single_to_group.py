@@ -16,9 +16,7 @@ class WyjhDoubaoSeedream45SingleToGroup(BaseWyjhNode):
     """Single image input -> multi image output."""
 
     SIZE_CHOICES = {
-        "1K": "1K",
         "1024x1024 (1:1)": "1024x1024",
-        "2K": "2K",
         "2048x2048 (1:1)": "2048x2048",
         "2304x1728 (4:3)": "2304x1728",
         "2496x1664 (3:2)": "2496x1664",
