@@ -10,6 +10,21 @@ from ..utils.image_io import decode_base64_image, download_image, extract_image_
 from ..utils.timing import time_block
 
 
+SIZE_CHOICES = {
+    "1:1 (1024x1024)": "1024x1024",
+    "2:3 (832x1248)": "832x1248",
+    "3:2 (1248x832)": "1248x832",
+    "3:4 (864x1152)": "864x1152",
+    "4:3 (1152x864)": "1152x864",
+    "7:9 (896x1152)": "896x1152",
+    "9:7 (1152x896)": "1152x896",
+    "9:16 (720x1280)": "720x1280",
+    "9:21 (576x1344)": "576x1344",
+    "16:9 (1280x720)": "1280x720",
+    "21:9 (1344x576)": "1344x576",
+}
+
+
 class WyjhZImageTurbo(BaseWyjhNode):
     """Text-to-image node for z-image-turbo."""
 
@@ -20,22 +35,7 @@ class WyjhZImageTurbo(BaseWyjhNode):
                 "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
-                "size": (
-                    [
-                        "1024x1024",
-                        "832x1248",
-                        "1248x832",
-                        "864x1152",
-                        "1152x864",
-                        "896x1152",
-                        "1152x896",
-                        "720x1280",
-                        "576x1344",
-                        "1280x720",
-                        "1344x576",
-                    ],
-                    {"default": "1024x1024"},
-                ),
+                "size": (list(SIZE_CHOICES.keys()), {"default": "1:1 (1024x1024)"}),
                 "watermark": ("BOOLEAN", {"default": False}),
                 "prompt_extend": ("BOOLEAN", {"default": True}),
             },
@@ -48,15 +48,16 @@ class WyjhZImageTurbo(BaseWyjhNode):
     def generate(
         self,
         prompt: str,
-        size: str = "1024x1024",
+        size: str = "1:1 (1024x1024)",
         watermark: bool = False,
         prompt_extend: bool = True,
     ):
         with time_block("WYJH Z-Image-Turbo"):
+            size_value = SIZE_CHOICES.get(size, size)
             payload: Dict[str, Any] = {
                 "model": "z-image-turbo",
                 "prompt": prompt,
-                "size": size,
+                "size": size_value,
                 "n": 1,
                 "watermark": watermark,
                 "prompt_extend": prompt_extend,
