@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
+from time import perf_counter
+
 import requests
 
 from ..config import get_api_key, get_base_url, get_ssl_verify, get_timeout
@@ -45,6 +47,34 @@ class WyjhApiClient:
                 detail += f" | response body: {body}"
             raise requests.HTTPError(detail, response=response) from None
 
+    def _log_request(
+        self,
+        method: str,
+        url: str,
+        *,
+        json: Optional[Dict[str, Any]] = None,
+        params: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> None:
+        safe_headers = dict(headers or {})
+        if "Authorization" in safe_headers:
+            safe_headers["Authorization"] = "Bearer ***"
+        print(f"[WYJH] HTTP {method} {url}")
+        if params:
+            print(f"[WYJH] params: {params}")
+        if json is not None:
+            print(f"[WYJH] payload: {json}")
+        if safe_headers:
+            print(f"[WYJH] headers: {safe_headers}")
+
+    def _log_response(self, response: requests.Response, elapsed: float) -> None:
+        print(f"[WYJH] response status: {response.status_code} ({elapsed:.3f}s)")
+        body = response.text
+        if body and len(body) > 2000:
+            body = body[:2000] + "...(truncated)"
+        if body:
+            print(f"[WYJH] response body: {body}")
+
     def post(
         self,
         path: str,
@@ -52,14 +82,20 @@ class WyjhApiClient:
         headers: Optional[Dict[str, str]] = None,
         params: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
+        url = self._url(path)
+        all_headers = self._headers(headers)
+        self._log_request("POST", url, json=json, params=params, headers=all_headers)
+        start = perf_counter()
         response = requests.post(
-            self._url(path),
+            url,
             json=json,
-            headers=self._headers(headers),
+            headers=all_headers,
             params=params,
             timeout=self.timeout,
             verify=self.ssl_verify,
         )
+        elapsed = perf_counter() - start
+        self._log_response(response, elapsed)
         self._raise_for_status(response)
         return response.json()
 
@@ -69,12 +105,18 @@ class WyjhApiClient:
         params: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
+        url = self._url(path)
+        all_headers = self._headers(headers)
+        self._log_request("GET", url, params=params, headers=all_headers)
+        start = perf_counter()
         response = requests.get(
-            self._url(path),
+            url,
             params=params or {},
-            headers=self._headers(headers),
+            headers=all_headers,
             timeout=self.timeout,
             verify=self.ssl_verify,
         )
+        elapsed = perf_counter() - start
+        self._log_response(response, elapsed)
         self._raise_for_status(response)
         return response.json()

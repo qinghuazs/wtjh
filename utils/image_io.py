@@ -7,6 +7,7 @@ import io
 from typing import Any, Dict
 
 import requests
+from time import perf_counter
 
 
 def extract_image_value(payload: Dict[str, Any]) -> str:
@@ -46,7 +47,11 @@ def extract_image_list(payload: Dict[str, Any]) -> list[str]:
 def download_image(url: str, *, timeout: int = 60, verify: bool = True) -> "Image.Image":
     from PIL import Image
 
+    print(f"[WYJH] HTTP GET {url}")
+    start = perf_counter()
     resp = requests.get(url, timeout=timeout, verify=verify)
+    elapsed = perf_counter() - start
+    print(f"[WYJH] response status: {resp.status_code} ({elapsed:.3f}s)")
     resp.raise_for_status()
     return Image.open(io.BytesIO(resp.content)).convert("RGB")
 

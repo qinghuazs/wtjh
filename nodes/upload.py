@@ -8,6 +8,7 @@ from typing import Tuple
 
 import requests
 import folder_paths
+from time import perf_counter
 
 from ..config import get_image_upload_url, get_ssl_verify, get_timeout
 from ..utils.image import tensor_to_pil
@@ -38,15 +39,20 @@ class WyjhImageUpload:
             buffer.seek(0)
 
             url = get_image_upload_url()
+            print(f"[WYJH] HTTP POST {url}")
             files = {"file": ("upload.png", buffer, "image/png")}
+            start = perf_counter()
             response = requests.post(
                 url,
                 files=files,
                 timeout=get_timeout(),
                 verify=get_ssl_verify(),
             )
+            elapsed = perf_counter() - start
+            print(f"[WYJH] response status: {response.status_code} ({elapsed:.3f}s)")
             response.raise_for_status()
             data = response.json()
+            print(f"[WYJH] response body: {data}")
             if not isinstance(data, dict) or "url" not in data:
                 raise RuntimeError("Upload response missing url")
             return (data["url"],)
@@ -90,15 +96,20 @@ class WyjhLocalImageUpload:
             buffer.seek(0)
 
             url = get_image_upload_url()
+            print(f"[WYJH] HTTP POST {url}")
             files = {"file": (filename or "upload.png", buffer, "image/png")}
+            start = perf_counter()
             response = requests.post(
                 url,
                 files=files,
                 timeout=get_timeout(),
                 verify=get_ssl_verify(),
             )
+            elapsed = perf_counter() - start
+            print(f"[WYJH] response status: {response.status_code} ({elapsed:.3f}s)")
             response.raise_for_status()
             data = response.json()
+            print(f"[WYJH] response body: {data}")
             if not isinstance(data, dict) or "url" not in data:
                 raise RuntimeError("Upload response missing url")
 
