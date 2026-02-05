@@ -57,6 +57,7 @@ class WyjhDoubaoSeedream45Txt2Img(BaseWyjhNode):
                 "response_format": "url",
                 "watermark": watermark,
             }
+            print("[WYJH] Doubao Seedream 4.5 Txt2Img payload:", payload)
             response = self.call("/v1/images/generations", payload)
             values = extract_image_list(response)
             images = []
