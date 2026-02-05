@@ -19,7 +19,7 @@ class WyjhQwenImageEdit(BaseWyjhNode):
             "required": {
                 "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
                 "image_url": ("STRING", {"default": "", "forceInput": True}),
-                "model_name": ("STRING", {"default": "qwen-image-edit-2509"}),
+                "model_name": (["qwen-image-edit-2509"], {"default": "qwen-image-edit-2509"}),
             }
         }
 
