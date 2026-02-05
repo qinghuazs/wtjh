@@ -10,9 +10,9 @@ import requests
 import folder_paths
 from time import perf_counter
 
-from wyjh.config import get_image_upload_url, get_ssl_verify, get_timeout
-from wyjh.utils.image import tensor_to_pil
-from wyjh.utils.timing import time_block
+from ...config import get_image_upload_url, get_ssl_verify, get_timeout
+from ...utils.image import tensor_to_pil
+from ...utils.timing import time_block
 
 
 class WyjhImageUpload:

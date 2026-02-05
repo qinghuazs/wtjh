@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Tuple
 
-from wyjh.utils.timing import time_block
+from ...utils.timing import time_block
 
 
 class WyjhImageUrlJoiner:

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import Dict, Any
 
-from wyjh.nodes.base import BaseWyjhNode
-from wyjh.utils.timing import time_block
+from ..base import BaseWyjhNode
+from ...utils.timing import time_block
 
 
 class WyjhText2Image(BaseWyjhNode):

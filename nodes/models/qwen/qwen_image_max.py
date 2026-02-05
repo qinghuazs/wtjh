@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from wyjh.nodes.base import BaseWyjhNode
-from wyjh.config import get_ssl_verify
-from wyjh.utils.image_io import decode_base64_image, download_image, extract_image_value, pil_to_tensor
-from wyjh.utils.timing import time_block
+from ...base import BaseWyjhNode
+from ....config import get_ssl_verify
+from ....utils.image_io import decode_base64_image, download_image, extract_image_value, pil_to_tensor
+from ....utils.timing import time_block
 
 
 SIZE_CHOICES = {
