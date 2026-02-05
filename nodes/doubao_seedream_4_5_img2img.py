@@ -123,6 +123,8 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
         watermark: bool = True,
     ):
         with time_block("WYJH Doubao Seedream 4.5 Multi Fusion"):
+            if isinstance(prompt, (list, tuple)):
+                prompt = prompt[0] if prompt else ""
             images: List[str] = []
             if isinstance(image_urls, (list, tuple)):
                 for item in image_urls:
@@ -132,6 +134,10 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
                 images = _split_image_inputs(image_urls)
             if not images:
                 raise ValueError("image_urls is required")
+            if isinstance(size, (list, tuple)):
+                size = size[0] if size else "2048x2048 (1:1)"
+            if isinstance(watermark, (list, tuple)):
+                watermark = bool(watermark[0]) if watermark else True
             size_value = self.SIZE_CHOICES.get(size, size)
             payload: Dict[str, Any] = {
                 "model": "doubao-seedream-4-5-251128",
@@ -143,7 +149,9 @@ class WyjhDoubaoSeedream45MultiFusion(BaseWyjhNode):
                 "response_format": "url",
                 "watermark": watermark,
             }
+            print("[WYJH] Doubao Seedream 4.5 Multi Fusion payload:", payload)
             response = self.call("/v1/images/generations", payload)
+            print("[WYJH] Doubao Seedream 4.5 Multi Fusion response:", response)
             values = extract_image_list(response)
             value = values[0]
             if isinstance(value, str) and value.startswith("http"):
