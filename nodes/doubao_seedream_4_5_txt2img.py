@@ -19,7 +19,7 @@ class WyjhDoubaoSeedream45Txt2Img(BaseWyjhNode):
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
                 "size": ("STRING", {"default": "2048x2048"}),

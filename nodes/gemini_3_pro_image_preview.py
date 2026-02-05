@@ -38,7 +38,7 @@ class WyjhGemini3ProImagePreview(BaseWyjhNode):
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
                 "aspect_ratio": ("STRING", {"default": "1:1"}),

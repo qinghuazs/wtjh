@@ -17,7 +17,7 @@ class WyjhGemini25FlashImageBasic(BaseWyjhNode):
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
                 "use_query_key": ("BOOLEAN", {"default": True}),

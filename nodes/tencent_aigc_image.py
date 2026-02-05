@@ -20,7 +20,7 @@ class WyjhTencentAigcImageCreate(BaseWyjhNode):
             "required": {
                 "model_name": ("STRING", {"default": "GEM"}),
                 "model_version": ("STRING", {"default": "3.0"}),
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
                 "file_type": ("STRING", {"default": "File"}),

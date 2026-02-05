@@ -13,7 +13,7 @@ class WyjhText2Image(BaseWyjhNode):
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
                 "model_name": ("STRING", {"default": ""}),
                 "width": ("INT", {"default": 512, "min": 64, "max": 4096, "step": 64}),
                 "height": ("INT", {"default": 512, "min": 64, "max": 4096, "step": 64}),

@@ -17,7 +17,7 @@ class WyjhQwenImageEdit(BaseWyjhNode):
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
                 "image_url": ("STRING", {"default": "", "forceInput": True}),
                 "model_name": ("STRING", {"default": "qwen-image-edit-2509"}),
             }

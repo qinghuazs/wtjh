@@ -17,7 +17,7 @@ class WyjhZImageTurbo(BaseWyjhNode):
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
                 "size": ("STRING", {"default": "1024x1024"}),

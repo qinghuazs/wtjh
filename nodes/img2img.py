@@ -14,7 +14,7 @@ class WyjhImage2Image(BaseWyjhNode):
         return {
             "required": {
                 "image": ("IMAGE",),
-                "prompt": ("STRING", {"multiline": True, "default": ""}),
+                "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
                 "model_name": ("STRING", {"default": ""}),
                 "strength": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 1.0, "step": 0.05}),
             },
