@@ -13,6 +13,7 @@
 - 腾讯AIGC生图（创建任务 / 查询结果）
 - Doubao Seedream 4.0 图生图
 - Doubao Seedream 4.5 文生图 / 图文生图 / 多图融合
+- Doubao Seedream 4.5 组图输出 / 单张图生组图 / 多参考图生组图
 - Gemini 3 Pro Image Preview
 - Gemini 2.5 Flash Image（含基础/Preview）
 - 文本输入节点

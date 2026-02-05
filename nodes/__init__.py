@@ -21,6 +21,9 @@ from .gemini_25_flash_image_basic import WyjhGemini25FlashImageBasic
 from .gemini_25_flash_image_preview import WyjhGemini25FlashImagePreview
 from .text_input import WyjhTextInput
 from .image_url_joiner import WyjhImageUrlJoiner
+from .doubao_seedream_4_5_group_output import WyjhDoubaoSeedream45GroupOutput
+from .doubao_seedream_4_5_multi_ref_group import WyjhDoubaoSeedream45MultiRefGroup
+from .doubao_seedream_4_5_single_to_group import WyjhDoubaoSeedream45SingleToGroup
 
 
 NODE_CLASS_MAPPINGS = {
@@ -45,6 +48,9 @@ NODE_CLASS_MAPPINGS = {
     "WYJH Gemini 2.5 Flash Image Preview": WyjhGemini25FlashImagePreview,
     "WYJH Text Input": WyjhTextInput,
     "WYJH Image URL Joiner": WyjhImageUrlJoiner,
+    "WYJH Doubao Seedream 4.5 Group Output": WyjhDoubaoSeedream45GroupOutput,
+    "WYJH Doubao Seedream 4.5 Multi Ref Group": WyjhDoubaoSeedream45MultiRefGroup,
+    "WYJH Doubao Seedream 4.5 Single To Group": WyjhDoubaoSeedream45SingleToGroup,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -69,4 +75,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "WYJH Gemini 2.5 Flash Image Preview": "WYJH · Gemini 2.5 Flash Image Preview",
     "WYJH Text Input": "WYJH · 文本输入",
     "WYJH Image URL Joiner": "WYJH · 图片URL拼接",
+    "WYJH Doubao Seedream 4.5 Group Output": "WYJH · Doubao Seedream 4.5 组图输出",
+    "WYJH Doubao Seedream 4.5 Multi Ref Group": "WYJH · Doubao Seedream 4.5 多参考图生组图",
+    "WYJH Doubao Seedream 4.5 Single To Group": "WYJH · Doubao Seedream 4.5 单张图生组图",
 }
