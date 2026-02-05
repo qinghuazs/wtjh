@@ -20,7 +20,22 @@ class WyjhZImageTurbo(BaseWyjhNode):
                 "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
-                "size": ("STRING", {"default": "1024x1024"}),
+                "size": (
+                    [
+                        "1024x1024",
+                        "832x1248",
+                        "1248x832",
+                        "864x1152",
+                        "1152x864",
+                        "896x1152",
+                        "1152x896",
+                        "720x1280",
+                        "576x1344",
+                        "1280x720",
+                        "1344x576",
+                    ],
+                    {"default": "1024x1024"},
+                ),
                 "watermark": ("BOOLEAN", {"default": False}),
                 "prompt_extend": ("BOOLEAN", {"default": True}),
             },
