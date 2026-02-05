@@ -10,6 +10,15 @@ from ..utils.image_io import decode_base64_image, download_image, extract_image_
 from ..utils.timing import time_block
 
 
+SIZE_CHOICES = {
+    "16:9 (1664x928)": "1664x928",
+    "4:3 (1472x1104)": "1472x1104",
+    "1:1 (1328x1328)": "1328x1328",
+    "3:4 (1104x1472)": "1104x1472",
+    "9:16 (928x1664)": "928x1664",
+}
+
+
 class WyjhQwenImageMax(BaseWyjhNode):
     """Text-to-image node for qwen-image-max."""
 
@@ -20,10 +29,12 @@ class WyjhQwenImageMax(BaseWyjhNode):
                 "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
-                "size": ("STRING", {"default": "1328x1328"}),
-                "n": ("INT", {"default": 1, "min": 1, "max": 1, "step": 1}),
+                "size": (
+                    list(SIZE_CHOICES.keys()),
+                    {"default": "16:9 (1664x928)"},
+                ),
                 "watermark": ("BOOLEAN", {"default": False}),
-                "prompt_extend": ("BOOLEAN", {"default": True}),
+                "prompt_extend": ("BOOLEAN", {"default": False}),
             },
         }
 
@@ -34,19 +45,17 @@ class WyjhQwenImageMax(BaseWyjhNode):
     def generate(
         self,
         prompt: str,
-        size: str = "1328x1328",
-        n: int = 1,
+        size: str = "16:9 (1664x928)",
         watermark: bool = False,
-        prompt_extend: bool = True,
+        prompt_extend: bool = False,
     ):
         with time_block("WYJH Qwen Image Max"):
-            if n != 1:
-                raise ValueError("qwen-image-max only supports n=1")
+            size_value = SIZE_CHOICES.get(size, size)
             payload: Dict[str, Any] = {
                 "model": "qwen-image-max",
                 "prompt": prompt,
-                "size": size,
-                "n": n,
+                "size": size_value,
+                "n": 1,
                 "watermark": watermark,
                 "prompt_extend": prompt_extend,
             }
