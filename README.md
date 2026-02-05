@@ -1,6 +1,6 @@
 # WYJH ComfyUI Custom Nodes
 
-该工程用于在 ComfyUI 中接入 WYJH 的 API（base URL: https://www.wyjh.top），覆盖以下模型类型：
+该工程用于在 ComfyUI 中接入 WYJH https://www.wyjh.top 的各类生图 API，覆盖以下模型类型：
 
 - 会话模型（Session/Chat）
 - 问生图（Text-to-Image）
@@ -20,6 +20,7 @@
 - 图片URL拼接节点（多图顺序输入）
 
 ## 项目结构
+节点按“通用能力 / 工具 / 模型”分层组织，便于按模型迭代。
 
 ```
 .
@@ -83,9 +84,13 @@
 
 1. 将该目录放到 `ComfyUI/custom_nodes/` 下。
 2. 安装依赖：
+
+切换到 `ComfyUI/custom_nodes/wyjh/` 目录安装依赖
+
    ```bash
    python3 -m pip install -r requirements.txt
    ```
+   
 3. 通过环境变量覆盖默认配置：
 
 `WYJH_API_KEY`：API 访问密钥（Bearer）
@@ -100,7 +105,7 @@
 
 ## 开发说明
 
-当前仅搭建了框架与节点入口，具体 API 路径、参数和返回结果需要按接口文档补齐。
+节点已按类型/模型拆分在 `nodes/` 下，新增模型时建议放在对应 `models/<vendor>/` 目录。
 
 下一步建议：
 - 确认各模型对应的 API 路径与入参/出参
