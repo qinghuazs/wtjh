@@ -21,7 +21,6 @@ class WyjhZImageTurbo(BaseWyjhNode):
             },
             "optional": {
                 "size": ("STRING", {"default": "1024x1024"}),
-                "n": ("INT", {"default": 1, "min": 1, "max": 8, "step": 1}),
                 "watermark": ("BOOLEAN", {"default": False}),
                 "prompt_extend": ("BOOLEAN", {"default": True}),
             },
@@ -35,7 +34,6 @@ class WyjhZImageTurbo(BaseWyjhNode):
         self,
         prompt: str,
         size: str = "1024x1024",
-        n: int = 1,
         watermark: bool = False,
         prompt_extend: bool = True,
     ):
@@ -44,7 +42,7 @@ class WyjhZImageTurbo(BaseWyjhNode):
                 "model": "z-image-turbo",
                 "prompt": prompt,
                 "size": size,
-                "n": n,
+                "n": 1,
                 "watermark": watermark,
                 "prompt_extend": prompt_extend,
             }
