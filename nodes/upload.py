@@ -77,6 +77,7 @@ class WyjhLocalImageUpload:
     def upload(self, image: str) -> Tuple[str, any]:
         from PIL import Image
         import numpy as np
+        import torch
 
         with time_block("WYJH Local Image Upload"):
             image_path = folder_paths.get_annotated_filepath(image)
@@ -102,8 +103,8 @@ class WyjhLocalImageUpload:
                 raise RuntimeError("Upload response missing url")
 
             # Convert to tensor for output
-            arr = np.array(pil).astype(np.float32) / 255.0
-            tensor = arr[np.newaxis, ...]  # Add batch dimension
+        arr = np.array(pil).astype(np.float32) / 255.0
+        tensor = torch.from_numpy(arr)[None, ...]  # Add batch dimension
 
             return (data["url"], tensor)
 
