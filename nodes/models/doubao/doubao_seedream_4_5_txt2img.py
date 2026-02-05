@@ -1,4 +1,4 @@
-"""Doubao Seedream 4.5 single image -> group output node."""
+"""Doubao Seedream 4.5 text-to-image node (single output)."""
 
 from __future__ import annotations
 
@@ -6,14 +6,14 @@ from typing import Any, Dict
 
 import torch
 
-from .base import BaseWyjhNode
-from ..config import get_ssl_verify
-from ..utils.image_io import decode_base64_image, download_image, extract_image_list, pil_to_tensor
-from ..utils.timing import time_block
+from wyjh.nodes.base import BaseWyjhNode
+from wyjh.config import get_ssl_verify
+from wyjh.utils.image_io import decode_base64_image, download_image, extract_image_list, pil_to_tensor
+from wyjh.utils.timing import time_block
 
 
-class WyjhDoubaoSeedream45SingleToGroup(BaseWyjhNode):
-    """Single image input -> multi image output."""
+class WyjhDoubaoSeedream45Txt2Img(BaseWyjhNode):
+    """Text-to-image node for doubao-seedream-4-5-251128."""
 
     SIZE_CHOICES = {
         "1024x1024 (1:1)": "1024x1024",
@@ -29,47 +29,36 @@ class WyjhDoubaoSeedream45SingleToGroup(BaseWyjhNode):
         return {
             "required": {
                 "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
-                "image_url": ("STRING", {"default": "", "forceInput": True}),
             },
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
-                "max_images": ("INT", {"default": 4, "min": 1, "max": 8, "step": 1}),
                 "watermark": ("BOOLEAN", {"default": False}),
             },
         }
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "generate"
-    CATEGORY = "WYJH/Image2Image"
+    CATEGORY = "WYJH/Text2Image"
 
     def generate(
         self,
         prompt: str,
-        image_url: str,
         size: str = "2048x2048 (1:1)",
-        max_images: int = 4,
         watermark: bool = False,
     ):
-        with time_block("WYJH Doubao Seedream 4.5 Single To Group"):
-            if not image_url:
-                raise ValueError("image_url is required")
+        with time_block("WYJH Doubao Seedream 4.5 Txt2Img"):
             size_value = self.SIZE_CHOICES.get(size, size)
             payload: Dict[str, Any] = {
                 "model": "doubao-seedream-4-5-251128",
                 "prompt": prompt,
-                "image": image_url,
                 "size": size_value,
-                "sequential_image_generation": "auto",
-                "sequential_image_generation_options": {
-                    "max_images": max_images,
-                },
+                "sequential_image_generation": "disabled",
                 "stream": False,
                 "response_format": "url",
                 "watermark": watermark,
             }
-            print("[WYJH] Doubao Seedream 4.5 Single To Group payload:", payload)
+            print("[WYJH] Doubao Seedream 4.5 Txt2Img payload:", payload)
             response = self.call("/v1/images/generations", payload)
-            print("[WYJH] Doubao Seedream 4.5 Single To Group response:", response)
             values = extract_image_list(response)
             images = []
             for value in values:

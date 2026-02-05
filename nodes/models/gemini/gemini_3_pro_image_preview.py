@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from .base import BaseWyjhNode
-from ..utils.image_io import decode_base64_image, pil_to_tensor
-from ..utils.timing import time_block
+from wyjh.nodes.base import BaseWyjhNode
+from wyjh.utils.image_io import decode_base64_image, pil_to_tensor
+from wyjh.utils.timing import time_block
 
 
 def _extract_inline_image_data(payload: Dict[str, Any]) -> str:

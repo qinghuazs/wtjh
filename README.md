@@ -25,28 +25,69 @@
 .
 ├─ __init__.py
 ├─ config.py
+├─ requirements.txt
 ├─ api/
 │  ├─ __init__.py
 │  └─ client.py
 ├─ nodes/
 │  ├─ __init__.py
 │  ├─ base.py
-│  ├─ session.py
-│  ├─ text2img.py
-│  ├─ img2img.py
-│  └─ video.py
+│  ├─ core/
+│  │  ├─ __init__.py
+│  │  ├─ session.py
+│  │  ├─ text2img.py
+│  │  ├─ img2img.py
+│  │  └─ video.py
+│  ├─ utils/
+│  │  ├─ __init__.py
+│  │  ├─ upload.py
+│  │  ├─ text_input.py
+│  │  └─ image_url_joiner.py
+│  └─ models/
+│     ├─ __init__.py
+│     ├─ qwen/
+│     │  ├─ __init__.py
+│     │  ├─ qwen_edit.py
+│     │  └─ qwen_image_max.py
+│     ├─ zimage/
+│     │  ├─ __init__.py
+│     │  └─ z_image_turbo.py
+│     ├─ tencent/
+│     │  ├─ __init__.py
+│     │  └─ tencent_aigc_image.py
+│     ├─ doubao/
+│     │  ├─ __init__.py
+│     │  ├─ doubao_seedream_4_0_img2img.py
+│     │  ├─ doubao_seedream_4_5_txt2img.py
+│     │  ├─ doubao_seedream_4_5_img2img.py
+│     │  ├─ doubao_seedream_4_5_group_output.py
+│     │  ├─ doubao_seedream_4_5_single_to_group.py
+│     │  └─ doubao_seedream_4_5_multi_ref_group.py
+│     └─ gemini/
+│        ├─ __init__.py
+│        ├─ gemini_3_pro_image_preview.py
+│        ├─ gemini_25_flash_image.py
+│        ├─ gemini_25_flash_image_basic.py
+│        └─ gemini_25_flash_image_preview.py
 ├─ utils/
 │  ├─ __init__.py
 │  ├─ errors.py
 │  ├─ http.py
-│  └─ image.py
+│  ├─ image.py
+│  ├─ image_io.py
+│  └─ timing.py
 └─ README.md
 ```
 
 ## 使用说明
 
 1. 将该目录放到 `ComfyUI/custom_nodes/` 下。
-2. 通过环境变量覆盖默认配置：
+2. 安装依赖：
+   ```bash
+   python3 -m pip install -r requirements.txt
+   ```
+3. 通过环境变量覆盖默认配置：
+
 `WYJH_API_KEY`：API 访问密钥（Bearer）
 
 也可以在 `ComfyUI/custom_nodes/wyjh/` 下创建 `.env` 文件，写入：
@@ -55,7 +96,7 @@
  WYJH_API_KEY=sk-xxxxxxxxxxxxxxxxxxxx
  ```
  
-3. 启动 ComfyUI 后，在节点列表中查找 `WYJH` 分类。
+4. 启动 ComfyUI 后，在节点列表中查找 `WYJH` 分类。
 
 ## 开发说明
 

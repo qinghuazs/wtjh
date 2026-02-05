@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing import Any, Dict, List
 
-from .base import BaseWyjhNode
-from ..config import get_ssl_verify
-from ..utils.image_io import decode_base64_image, download_image, extract_image_list, pil_to_tensor
-from ..utils.timing import time_block
+from wyjh.nodes.base import BaseWyjhNode
+from wyjh.config import get_ssl_verify
+from wyjh.utils.image_io import decode_base64_image, download_image, extract_image_list, pil_to_tensor
+from wyjh.utils.timing import time_block
 
 
 def _split_image_inputs(text: str) -> List[str]:

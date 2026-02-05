@@ -1,4 +1,4 @@
-"""Doubao Seedream 4.0 image-to-image node."""
+"""Doubao Seedream 4.5 single image -> group output node."""
 
 from __future__ import annotations
 
@@ -6,14 +6,14 @@ from typing import Any, Dict
 
 import torch
 
-from .base import BaseWyjhNode
-from ..config import get_ssl_verify
-from ..utils.image_io import decode_base64_image, download_image, extract_image_list, pil_to_tensor
-from ..utils.timing import time_block
+from wyjh.nodes.base import BaseWyjhNode
+from wyjh.config import get_ssl_verify
+from wyjh.utils.image_io import decode_base64_image, download_image, extract_image_list, pil_to_tensor
+from wyjh.utils.timing import time_block
 
 
-class WyjhDoubaoSeedream40Img2Img(BaseWyjhNode):
-    """Image-to-image node for doubao-seedream-4-0-250828."""
+class WyjhDoubaoSeedream45SingleToGroup(BaseWyjhNode):
+    """Single image input -> multi image output."""
 
     SIZE_CHOICES = {
         "1024x1024 (1:1)": "1024x1024",
@@ -33,6 +33,7 @@ class WyjhDoubaoSeedream40Img2Img(BaseWyjhNode):
             },
             "optional": {
                 "size": (list(cls.SIZE_CHOICES.keys()), {"default": "2048x2048 (1:1)"}),
+                "max_images": ("INT", {"default": 4, "min": 1, "max": 8, "step": 1}),
                 "watermark": ("BOOLEAN", {"default": False}),
             },
         }
@@ -45,24 +46,30 @@ class WyjhDoubaoSeedream40Img2Img(BaseWyjhNode):
         self,
         prompt: str,
         image_url: str,
-        size: str = "2048x2048",
+        size: str = "2048x2048 (1:1)",
+        max_images: int = 4,
         watermark: bool = False,
     ):
-        with time_block("WYJH Doubao Seedream 4.0 Img2Img"):
+        with time_block("WYJH Doubao Seedream 4.5 Single To Group"):
             if not image_url:
                 raise ValueError("image_url is required")
             size_value = self.SIZE_CHOICES.get(size, size)
             payload: Dict[str, Any] = {
-                "model": "doubao-seedream-4-0-250828",
+                "model": "doubao-seedream-4-5-251128",
                 "prompt": prompt,
                 "image": image_url,
                 "size": size_value,
-                "sequential_image_generation": "disabled",
+                "sequential_image_generation": "auto",
+                "sequential_image_generation_options": {
+                    "max_images": max_images,
+                },
                 "stream": False,
                 "response_format": "url",
                 "watermark": watermark,
             }
+            print("[WYJH] Doubao Seedream 4.5 Single To Group payload:", payload)
             response = self.call("/v1/images/generations", payload)
+            print("[WYJH] Doubao Seedream 4.5 Single To Group response:", response)
             values = extract_image_list(response)
             images = []
             for value in values:

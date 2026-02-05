@@ -1,29 +1,38 @@
 """Node registration for ComfyUI."""
 
-from .session import WyjhSessionChat
-from .text2img import WyjhText2Image
-from .img2img import WyjhImage2Image
-from .video import WyjhVideoGenerate
-from .qwen_edit import WyjhQwenImageEdit
-from .upload import WyjhImageUpload, WyjhLocalImageUpload
-from .z_image_turbo import WyjhZImageTurbo
-from .qwen_image_max import WyjhQwenImageMax
-from .tencent_aigc_image import WyjhTencentAigcImageCreate, WyjhTencentAigcImageQuery
-from .doubao_seedream_4_0_img2img import WyjhDoubaoSeedream40Img2Img
-from .doubao_seedream_4_5_txt2img import WyjhDoubaoSeedream45Txt2Img
-from .doubao_seedream_4_5_img2img import (
+from .core.session import WyjhSessionChat
+from .core.text2img import WyjhText2Image
+from .core.img2img import WyjhImage2Image
+from .core.video import WyjhVideoGenerate
+from .models.qwen.qwen_edit import WyjhQwenImageEdit
+from .utils.upload import WyjhImageUpload, WyjhLocalImageUpload
+from .models.zimage.z_image_turbo import WyjhZImageTurbo
+from .models.qwen.qwen_image_max import WyjhQwenImageMax
+from .models.tencent.tencent_aigc_image import (
+    WyjhTencentAigcImageCreate,
+    WyjhTencentAigcImageQuery,
+)
+from .models.doubao.doubao_seedream_4_0_img2img import WyjhDoubaoSeedream40Img2Img
+from .models.doubao.doubao_seedream_4_5_txt2img import WyjhDoubaoSeedream45Txt2Img
+from .models.doubao.doubao_seedream_4_5_img2img import (
     WyjhDoubaoSeedream45Img2Img,
     WyjhDoubaoSeedream45MultiFusion,
 )
-from .gemini_3_pro_image_preview import WyjhGemini3ProImagePreview
-from .gemini_25_flash_image import WyjhGemini25FlashImage
-from .gemini_25_flash_image_basic import WyjhGemini25FlashImageBasic
-from .gemini_25_flash_image_preview import WyjhGemini25FlashImagePreview
-from .text_input import WyjhTextInput
-from .image_url_joiner import WyjhImageUrlJoiner
-from .doubao_seedream_4_5_group_output import WyjhDoubaoSeedream45GroupOutput
-from .doubao_seedream_4_5_multi_ref_group import WyjhDoubaoSeedream45MultiRefGroup
-from .doubao_seedream_4_5_single_to_group import WyjhDoubaoSeedream45SingleToGroup
+from .models.gemini.gemini_3_pro_image_preview import WyjhGemini3ProImagePreview
+from .models.gemini.gemini_25_flash_image import WyjhGemini25FlashImage
+from .models.gemini.gemini_25_flash_image_basic import WyjhGemini25FlashImageBasic
+from .models.gemini.gemini_25_flash_image_preview import WyjhGemini25FlashImagePreview
+from .utils.text_input import WyjhTextInput
+from .utils.image_url_joiner import WyjhImageUrlJoiner
+from .models.doubao.doubao_seedream_4_5_group_output import (
+    WyjhDoubaoSeedream45GroupOutput,
+)
+from .models.doubao.doubao_seedream_4_5_multi_ref_group import (
+    WyjhDoubaoSeedream45MultiRefGroup,
+)
+from .models.doubao.doubao_seedream_4_5_single_to_group import (
+    WyjhDoubaoSeedream45SingleToGroup,
+)
 
 
 NODE_CLASS_MAPPINGS = {

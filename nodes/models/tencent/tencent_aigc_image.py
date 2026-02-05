@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Any, Dict, Tuple
 import time
 
-from .base import BaseWyjhNode
-from ..config import get_ssl_verify
-from ..utils.image_io import download_image, pil_to_tensor
-from ..utils.timing import time_block
+from wyjh.nodes.base import BaseWyjhNode
+from wyjh.config import get_ssl_verify
+from wyjh.utils.image_io import download_image, pil_to_tensor
+from wyjh.utils.timing import time_block
 
 
 class WyjhTencentAigcImageCreate(BaseWyjhNode):

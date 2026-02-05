@@ -1,17 +1,17 @@
-"""Gemini 2.5 Flash image generation node."""
+"""Gemini 2.5 Flash image generation node (basic)."""
 
 from __future__ import annotations
 
 from typing import Any, Dict
 
-from .base import BaseWyjhNode
-from ..utils.image_io import decode_base64_image, pil_to_tensor
-from ..utils.timing import time_block
+from wyjh.nodes.base import BaseWyjhNode
+from wyjh.utils.image_io import decode_base64_image, pil_to_tensor
+from wyjh.utils.timing import time_block
 from .gemini_3_pro_image_preview import _extract_inline_image_data
 
 
-class WyjhGemini25FlashImage(BaseWyjhNode):
-    """Text-to-image node for gemini-2.5-flash-image."""
+class WyjhGemini25FlashImageBasic(BaseWyjhNode):
+    """Text-to-image node for gemini-2.5-flash-image (no aspect controls)."""
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -20,7 +20,6 @@ class WyjhGemini25FlashImage(BaseWyjhNode):
                 "prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
             },
             "optional": {
-                "aspect_ratio": ("STRING", {"default": "1:1"}),
                 "use_query_key": ("BOOLEAN", {"default": True}),
             },
         }
@@ -29,8 +28,8 @@ class WyjhGemini25FlashImage(BaseWyjhNode):
     FUNCTION = "generate"
     CATEGORY = "WYJH/Text2Image"
 
-    def generate(self, prompt: str, aspect_ratio: str = "1:1", use_query_key: bool = True):
-        with time_block("WYJH Gemini 2.5 Flash Image"):
+    def generate(self, prompt: str, use_query_key: bool = True):
+        with time_block("WYJH Gemini 2.5 Flash Image Basic"):
             payload: Dict[str, Any] = {
                 "contents": [
                     {
@@ -42,9 +41,6 @@ class WyjhGemini25FlashImage(BaseWyjhNode):
                 ],
                 "generationConfig": {},
                 "responseModalities": ["IMAGE"],
-                "imageConfig": {
-                    "aspectRatio": aspect_ratio,
-                },
             }
 
             params = {"key": self.client.api_key} if use_query_key and self.client.api_key else None

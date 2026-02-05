@@ -7,8 +7,10 @@
 - `__init__.py`: ComfyUI entry point that exposes node mappings.
 - `config.py`: Base URL and timeout configuration, backed by environment variables.
 - `api/`: HTTP client wrapper for the WYJH API.
-- `nodes/`: ComfyUI node implementations, grouped by model type:
-  - `session.py` (chat), `text2img.py`, `img2img.py`, `video.py`
+- `nodes/`: ComfyUI node implementations, grouped by type/model:
+  - `core/`: `session.py`, `text2img.py`, `img2img.py`, `video.py`
+  - `utils/`: `upload.py`, `text_input.py`, `image_url_joiner.py`
+  - `models/`: `qwen/`, `zimage/`, `doubao/`, `tencent/`, `gemini/`
 - `utils/`: Error types, HTTP helpers, and image conversion placeholders.
 - `requirements.txt`: Python dependencies for the client runtime.
 - `README.md`: Project overview and setup notes.
