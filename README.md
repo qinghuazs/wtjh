@@ -16,6 +16,7 @@
 - Gemini 3 Pro Image Preview
 - Gemini 2.5 Flash Image（含基础/Preview）
 - 文本输入节点
+- 图片URL拼接节点（多图顺序输入）
 
 ## 项目结构
 

@@ -20,6 +20,7 @@ from .gemini_25_flash_image import WyjhGemini25FlashImage
 from .gemini_25_flash_image_basic import WyjhGemini25FlashImageBasic
 from .gemini_25_flash_image_preview import WyjhGemini25FlashImagePreview
 from .text_input import WyjhTextInput
+from .image_url_joiner import WyjhImageUrlJoiner
 
 
 NODE_CLASS_MAPPINGS = {
@@ -43,6 +44,7 @@ NODE_CLASS_MAPPINGS = {
     "WYJH Gemini 2.5 Flash Image Basic": WyjhGemini25FlashImageBasic,
     "WYJH Gemini 2.5 Flash Image Preview": WyjhGemini25FlashImagePreview,
     "WYJH Text Input": WyjhTextInput,
+    "WYJH Image URL Joiner": WyjhImageUrlJoiner,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -66,4 +68,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "WYJH Gemini 2.5 Flash Image Basic": "WYJH · Gemini 2.5 Flash Image（基础）",
     "WYJH Gemini 2.5 Flash Image Preview": "WYJH · Gemini 2.5 Flash Image Preview",
     "WYJH Text Input": "WYJH · 文本输入",
+    "WYJH Image URL Joiner": "WYJH · 图片URL拼接",
 }
